@@ -1,0 +1,299 @@
+:root {
+    --ink: #1B2430;
+    --ink-soft: #55606E;
+    --paper: #FAFAF8;
+    --line: #DEDAD1;
+    --teal: #2E6E62;
+    --teal-dim: #E4EEEB;
+    --amber: #C97A2B;
+    --amber-dim: #F7EADA;
+    --red: #B3432B;
+    --red-dim: #F6E2DC;
+    --radius: 4px;
+    /* Fixed (not redefined in dark mode) so the user's own bubble never
+       inherits --ink's light-mode-vs-dark-mode swap and loses contrast. */
+    --user-bubble: #1B2430;
+    /* The urgency banner's backgrounds (teal/amber/red -dim) stay light in
+       both themes — this keeps its text dark to match, instead of
+       inheriting --ink, which dark mode flips to a light color. */
+    --banner-ink: #1B2430;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+    height: 100%;
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+#app {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ---------- Header ---------- */
+.app-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 20px 20px 12px;
+    border-bottom: 1px solid var(--line);
+}
+
+.wordmark {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 500;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+/* ---------- Views ---------- */
+.view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+}
+
+/* [hidden] and .view{display:flex} have equal specificity, and this
+   stylesheet loads after the browser's default one — so without this rule
+   .view wins the tie and hidden sections still render, stacking every
+   screen on one page. This rule must stay after .view and win the tie. */
+.view[hidden] {
+    display: none;
+}
+
+/* ---------- Panels (flat, left accent bar — not shadow cards) ---------- */
+.panel {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--teal);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+}
+
+.panel--accent {
+    border-left-color: var(--teal);
+    background: var(--teal-dim);
+    border-color: transparent;
+}
+
+.panel--muted {
+    border-left-color: var(--line);
+    background: transparent;
+}
+
+.panel h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 18px;
+    margin: 0 0 8px;
+}
+
+.lede {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 0 12px;
+}
+
+.fine-print {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.plain-list {
+    margin: 0;
+    padding-left: 18px;
+    line-height: 1.6;
+}
+
+.plain-list li { margin-bottom: 6px; }
+
+/* ---------- Form fields ---------- */
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    flex: 1;
+}
+
+.field-row {
+    display: flex;
+    gap: 12px;
+}
+
+textarea, input, select {
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--ink);
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #fff;
+    resize: vertical;
+}
+
+textarea:focus, input:focus, select:focus, .btn:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 1px;
+}
+
+#intakeForm { display: flex; flex-direction: column; gap: 16px; }
+
+/* ---------- Buttons ---------- */
+.btn {
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 13px 20px;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.btn--primary {
+    background: var(--teal);
+    color: #fff;
+}
+
+.btn--primary:disabled {
+    background: #A9BDB7;
+    cursor: default;
+}
+
+.btn--secondary {
+    background: transparent;
+    border-color: var(--teal);
+    color: var(--teal);
+}
+
+.btn--compact {
+    padding: 10px 16px;
+}
+
+/* ---------- Chat ---------- */
+.chat-log {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    padding-bottom: 8px;
+}
+
+.msg {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    line-height: 1.45;
+    font-size: 15px;
+}
+
+.msg--ai {
+    align-self: flex-start;
+    background: var(--teal-dim);
+}
+
+.msg--user {
+    align-self: flex-end;
+    background: var(--user-bubble);
+    color: #fff;
+}
+
+.msg--typing {
+    align-self: flex-start;
+    color: var(--ink-soft);
+    font-style: italic;
+    font-size: 14px;
+}
+
+.msg--error {
+    align-self: stretch;
+    background: var(--red-dim);
+    color: var(--red);
+    border: 1px solid var(--red);
+}
+
+.msg--error .retry-btn {
+    display: inline-block;
+    margin-top: 8px;
+    font: inherit;
+    font-weight: 600;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--red);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.chat-form {
+    display: flex;
+    gap: 8px;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+}
+
+.chat-form input {
+    flex: 1;
+}
+
+/* ---------- Result / urgency ---------- */
+.urgency-banner {
+    padding: 16px 18px;
+    border-radius: var(--radius);
+    border-left: 4px solid var(--teal);
+    background: var(--teal-dim);
+    color: var(--banner-ink);
+}
+
+.urgency-banner.urgency-moderate {
+    border-left-color: var(--amber);
+    background: var(--amber-dim);
+}
+
+.urgency-banner.urgency-urgent {
+    border-left-color: var(--red);
+    background: var(--red-dim);
+}
+
+.urgency-label {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --ink: #ECE9E2;
+        --ink-soft: #A7ADB6;
+        --paper: #14181D;
+        --line: #2B323B;
+    }
+    .panel, textarea, input, select { background: #1B2129; color: var(--ink); }
+    .msg--ai { background: #1E2C29; }
+}

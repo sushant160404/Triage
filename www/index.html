@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self' data: gap: https://ssl.gstatic.com https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src *;">
+    <title>Triage</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div id="app">
+
+        <!-- ============ HEADER ============ -->
+        <header class="app-header">
+            <h1 class="wordmark"><em>Triage</em></h1>
+            <button id="restartBtn" class="icon-btn" title="Start over" hidden>&#8635;</button>
+        </header>
+
+        <!-- ============ DISCLAIMER SCREEN ============ -->
+        <section id="view-disclaimer" class="view">
+            <div class="panel panel--accent">
+                <p class="lede">Triage helps you think through symptoms and gauge how urgently
+                to seek care. It does not diagnose conditions and it is not a doctor.</p>
+                <ul class="plain-list">
+                    <li>If this is a medical emergency, call your local emergency number now.</li>
+                    <li>Answers you give are sent to an AI model to generate guidance.</li>
+                    <li>Always confirm anything important with a qualified clinician.</li>
+                </ul>
+            </div>
+            <button id="acceptBtn" class="btn btn--primary">I understand, continue</button>
+        </section>
+
+        <!-- ============ INTAKE SCREEN ============ -->
+        <section id="view-intake" class="view" hidden>
+            <form id="intakeForm">
+                <label class="field">
+                    <span>What's going on?</span>
+                    <textarea id="symptomText" rows="4" placeholder="Describe your main symptom, when it started, and anything that makes it better or worse" required></textarea>
+                </label>
+
+                <div class="field-row">
+                    <label class="field">
+                        <span>Age</span>
+                        <input type="number" id="age" min="0" max="120" required>
+                    </label>
+                    <label class="field">
+                        <span>Sex assigned at birth</span>
+                        <select id="sex">
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                            <option value="prefer_not_to_say">Prefer not to say</option>
+                        </select>
+                    </label>
+                </div>
+
+                <label class="field">
+                    <span>Relevant history (optional)</span>
+                    <input type="text" id="history" placeholder="Existing conditions, allergies, current medicines">
+                </label>
+
+                <button type="submit" class="btn btn--primary">Start assessment</button>
+            </form>
+        </section>
+
+        <!-- ============ CONVERSATION SCREEN ============ -->
+        <section id="view-chat" class="view" hidden>
+            <div id="chatLog" class="chat-log" aria-live="polite"></div>
+
+            <form id="chatForm" class="chat-form">
+                <input type="text" id="chatInput" placeholder="Type your answer" autocomplete="off">
+                <button type="submit" class="btn btn--primary btn--compact">Send</button>
+            </form>
+        </section>
+
+        <!-- ============ RESULT SCREEN ============ -->
+        <section id="view-result" class="view" hidden>
+            <div id="urgencyBanner" class="urgency-banner">
+                <span class="urgency-label" id="urgencyLabel">Assessing</span>
+            </div>
+
+            <div class="panel">
+                <h2>Possible explanations</h2>
+                <ul id="possibleCauses" class="plain-list"></ul>
+            </div>
+
+            <div class="panel">
+                <h2>What to do next</h2>
+                <p id="recommendation"></p>
+            </div>
+
+            <div class="panel panel--muted">
+                <p class="fine-print">This is general guidance from an AI model, not a diagnosis.
+                If symptoms worsen or you're unsure, contact a clinician or emergency services.</p>
+            </div>
+
+            <button id="newCheckBtn" class="btn btn--secondary">Start a new check</button>
+        </section>
+
+    </div>
+
+    <script src="cordova.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
