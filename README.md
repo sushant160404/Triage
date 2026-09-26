@@ -1,4 +1,6 @@
-# Triage — Cordova Symptom Checker (Grok API)
+# Triage — Cordova Symptom Checker
+
+<img width="1774" height="887" alt="Triage_Ai" src="https://github.com/user-attachments/assets/e60fab75-a120-4413-abb9-c6b485101bfd" />
 
 A hybrid mobile app (Apache Cordova) that walks a user through a short,
 conversational symptom check and returns a plain-language urgency level and
